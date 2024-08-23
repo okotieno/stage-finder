@@ -1,37 +1,38 @@
 'use strict';
 
-const createStop = async (queryInterface, route) => {
-  const [existingResult] = await queryInterface.sequelize.query(
-    `SELECT "id" FROM "stops" WHERE "name" = :name;`,
-    {
-      replacements: { name: route.name }
-    }
-  );
-  let existingResultId = existingResult?.[0]?.id;
-  if (existingResultId) {
-    return existingResultId;
-  }
-  await queryInterface.bulkInsert('stops', [
-    {
-      ...route,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
-  ]);
-
-  const [results] = await queryInterface.sequelize.query(
-    `SELECT "id" FROM "stops" WHERE "name" = :name;`,
-    {
-      replacements: { name: route.name }
-    }
-  );
-  return results[0]?.id;
-
-};
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
+    const createItem = async (route, tableName) => {
+      const [existingResult] = await queryInterface.sequelize.query(
+        `SELECT "id" FROM "${tableName}" WHERE "name" = :name;`,
+        {
+          replacements: { name: route.name }
+        }
+      );
+      let existingResultId = existingResult?.[0]?.id;
+      if (existingResultId) {
+        return existingResultId;
+      }
+      await queryInterface.bulkInsert(tableName, [
+        {
+          ...route,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ]);
+
+      const [results] = await queryInterface.sequelize.query(
+        `SELECT "id" FROM "${tableName}" WHERE "name" = :name;`,
+        {
+          replacements: { name: route.name }
+        }
+      );
+      return results[0]?.id;
+
+    };
+
     const routes = [
       {
         'routeName': '110ATH',
@@ -776,12 +777,14 @@ module.exports = {
     ];
 
     for (let i = 0; i < routes.length; i++) {
+
       const route = routes[i];
-      const sourceId = await createStop(queryInterface, route.source);
-      const destinationId = await createStop(queryInterface, route.terminus);
-      for(let j = 0; j < route.destinationsServed.length; j++) {
+      const sourceStopId = await createItem(route.source, 'stops');
+      const destinationStopId = await createItem(route.terminus, 'stops');
+      const routeId = await createItem({ name: route.routeName, destinationStopId, sourceStopId }, 'routes');
+      for (let j = 0; j < route.destinationsServed.length; j++) {
         const destination = route.destinationsServed[j];
-        const destinationId = await createStop(queryInterface, destination);
+        const destinationId = await createItem(destination, 'stops');
       }
     }
   },
