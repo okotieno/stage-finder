@@ -1,0 +1,28 @@
+{
+  "name": "db",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/db/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project db --web",
+  "targets": {
+    "db:seed:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "envFile": "./apps/backend/.env",
+        "commands": [
+          "sequelize-cli db:seed:all --config='libs/backend/db/sequelize.config.js' --seeders-path='libs/backend/db/src/lib/seeders'"
+        ]
+      }
+    },
+    "db:seed:undo:all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "envFile": "./apps/backend/.env",
+        "commands": [
+          "sequelize-cli db:seed:undo:all --config='apps/backend/sequelize.config.js' --seeders-path='libs/backend/db/src/lib/seeders'"
+        ]
+      }
+    }
+  }
+}
