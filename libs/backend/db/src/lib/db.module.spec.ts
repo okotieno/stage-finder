@@ -2,15 +2,8 @@
 import { DbModule } from './db.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import {
-  CountryModel,
-  LanguageModel,
-  PermissionModel,
-  ProductModel,
-  RoleModel,
-  RoleUserModel,
-  UserModel,
-  CountryLanguageUserModel,
-  ShelfModel
+  RouteModel,
+  StopModel
 } from './models';
 import { SequelizeOptions } from 'sequelize-typescript';
 
@@ -39,15 +32,8 @@ describe('DbModule', () => {
     DbModule; // trigger module initialization
 
     const expectedModels = [
-      PermissionModel,
-      ProductModel,
-      RoleModel,
-      RoleUserModel,
-      UserModel,
-      LanguageModel,
-      CountryModel,
-      CountryLanguageUserModel,
-      ShelfModel
+      RouteModel,
+      StopModel
     ];
 
     expect(mockedSequelizeModule).toHaveBeenCalledWith(expect.objectContaining({

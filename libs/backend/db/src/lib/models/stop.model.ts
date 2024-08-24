@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-@Table({ tableName: 'stops' })
+@Table({ tableName: 'stops', underscored: true })
 export class StopModel extends Model<StopModel> {
 
   @Column({

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RoutesController } from './route.controller';
-import { RoutesService } from './routes.service';
+import { RoutesService } from './services/routes.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RouteModel, StopModel } from '@sf/backend/db';
 

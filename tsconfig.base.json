@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@sf/backend/db": ["libs/backend/db/src/index.ts"],
-      "@stage-finder/routes": ["libs/backend/routes/src/index.ts"]
+      "@sf/backend/routes": ["libs/backend/routes/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

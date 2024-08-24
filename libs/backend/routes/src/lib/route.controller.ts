@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { RoutesService } from './routes.service';
+import { RoutesService } from './services/routes.service';
 import { RouteModel } from '@sf/backend/db';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 

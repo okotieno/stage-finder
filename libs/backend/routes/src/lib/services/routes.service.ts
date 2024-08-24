@@ -14,12 +14,12 @@ export class RoutesService {
   }
 
   async findAll() {
-    const routes = await this.routeModel.findAll();
+    const routes = await this.routeModel.findAll({include: [StopModel]});
 
     // Fetch and attach stop details for each route
     const routePromises = routes.map(async route => {
       const source = await this.stopModel.findOne({ where: { id: route.sourceStopId } });
-      const destination = await this.stopModel.findOne({ where: { id: route.destinationStopId } });
+      const terminus = await this.stopModel.findOne({ where: { id: route.terminusStopId } });
       return {
         id: route.id,
         name: route.name,
@@ -29,12 +29,18 @@ export class RoutesService {
           lat: source?.lat,
           lng: source?.lng,
         },
-        destination: {
-          id: destination?.id,
-          name: destination?.name,
-          lat: destination?.lat,
-          lng: destination?.lng,
+        terminus: {
+          id: terminus?.id,
+          name: terminus?.name,
+          lat: terminus?.lat,
+          lng: terminus?.lng,
         },
+        stops: route.destinationsServed.map((item) => ({
+          id: item?.id,
+          name: item?.name,
+          lat: item?.lat,
+          lng: item?.lng,
+        }))
       };
     });
 

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { DbModule } from '@sf/backend/db';
-import { RoutesModule } from '@stage-finder/routes';
+import { RoutesModule } from '@sf/backend/routes';
 
 @Module({
   imports: [

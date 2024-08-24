@@ -18,8 +18,8 @@ module.exports = {
       await queryInterface.bulkInsert(tableName, [
         {
           ...route,
-          createdAt: new Date(),
-          updatedAt: new Date()
+          ['created_at']: new Date(),
+          ['updated_at']: new Date()
         }
       ]);
 
@@ -780,11 +780,26 @@ module.exports = {
 
       const route = routes[i];
       const sourceStopId = await createItem(route.source, 'stops');
-      const destinationStopId = await createItem(route.terminus, 'stops');
-      const routeId = await createItem({ name: route.routeName, destinationStopId, sourceStopId }, 'routes');
+      const terminusStopId = await createItem(route.terminus, 'stops');
+      const routeId = await createItem({
+        name: route.routeName,
+        ['terminus_stop_id']: terminusStopId,
+        ['source_stop_id']: sourceStopId
+      }, 'routes');
       for (let j = 0; j < route.destinationsServed.length; j++) {
         const destination = route.destinationsServed[j];
-        const destinationId = await createItem(destination, 'stops');
+        const stopId = await createItem(destination, 'stops');
+
+        await queryInterface.bulkInsert('route_stop', [
+          {
+            ['route_id']: routeId,
+            ['stop_id']: stopId,
+            ['created_at']: new Date(),
+            ['updated_at']: new Date()
+          }
+        ]);
+
+
       }
     }
   },

@@ -1,7 +1,7 @@
-import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { StopModel } from './stop.model';
 
-@Table({ tableName: 'routes' })
+@Table({ tableName: 'routes', underscored: true })
 export class RouteModel extends Model<RouteModel> {
 
   @Column({
@@ -25,8 +25,16 @@ export class RouteModel extends Model<RouteModel> {
 
   @ForeignKey(() => StopModel)
   @Column
-  destinationStopId?: number;
+  terminusStopId?: number;
 
-  destination?: StopModel
+  terminus?: StopModel
+
+  @BelongsToMany(() => StopModel, {
+    foreignKeyConstraint: true,
+    through: 'route_stop',
+    foreignKey: 'route_id',
+    otherKey: 'stop_id'
+  })
+  destinationsServed!: StopModel[];
 
 }
