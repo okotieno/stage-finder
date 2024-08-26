@@ -28,7 +28,7 @@ async function bootstrap() {
   };
   const document = SwaggerModule.createDocument(app, config, options);
   SwaggerModule.setup('api', app, document);
-  const port = process.env.PORT || 3000;
+  const port = process.env['SF_BACKEND_PORT'] ?? 3000;
   await app.listen(port);
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
 }
