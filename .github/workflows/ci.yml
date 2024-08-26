@@ -95,7 +95,7 @@ jobs:
             -e SF_DATABASE_DATABASE=${{ env.SF_DATABASE_DATABASE }} \
             -e SF_BACKEND_PORT=${{ env.SF_BACKEND_PORT }} \
             --link stage_finder_postgres_db:postgres \
-            -l "traefik.http.routers.stage_finder_backend.rule=Host(\`furahasolutions.tech\`) && PathPrefix(\`/stage_finder_backend\`)" \
+            -l "traefik.http.routers.stage_finder_backend.rule=Host(\`api.furahasolutions.tech\`) && PathPrefix(\`/stage_finder_backend\`)" \
             -l "traefik.http.routers.stage_finder_backend.middlewares=stage_finder_backendpathstrip@docker" \
             -l "traefik.http.middlewares.stage_finder_backendpathstrip.stripprefix.prefixes=/stage_finder_backend" \
             -l "traefik.http.middlewares.stage_finder_backend.stripprefix.prefixes=/stage_finder_backend" \
@@ -104,3 +104,4 @@ jobs:
             -l "traefik.http.routers.stage_finder_backend.tls=true"  \
             -l "traefik.http.routers.stage_finder_backend.tls.certresolver=certresolver"  \
             ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
+
