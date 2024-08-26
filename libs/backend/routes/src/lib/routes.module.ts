@@ -3,12 +3,14 @@ import { RoutesController } from './route.controller';
 import { RoutesService } from './services/routes.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RouteModel, StopModel } from '@sf/backend/db';
+import { RouteStopModel } from '@sf/backend/db';
 
 @Module({
   imports: [
     SequelizeModule.forFeature([
       RouteModel,
-      StopModel
+      StopModel,
+      RouteStopModel
     ])
   ],
   controllers: [
