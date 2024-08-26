@@ -13,6 +13,18 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
+    env:
+      FS_ENVIRONMENT: ${{ secrets.FS_ENVIRONMENT }}
+      FS_DATABASE_DIALECT: ${{ secrets.FS_DATABASE_DIALECT }}
+      FS_DATABASE_HOST: ${{ secrets.FS_DATABASE_HOST }}
+      FS_DATABASE_PORT: ${{ secrets.FS_DATABASE_PORT }}
+      FS_DATABASE_USERNAME: ${{ secrets.FS_DATABASE_USERNAME }}
+      FS_DATABASE_PASSWORD: ${{ secrets.FS_DATABASE_PASSWORD }}
+      FS_DATABASE_DATABASE: ${{ secrets.FS_DATABASE_DATABASE }}
+      FS_BACKEND_PORT: ${{ secrets.FS_BACKEND_PORT }}
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,4 +72,4 @@ jobs:
           context: .
           file: ./apps/backend/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/your-repo-name:latest
+          tags: ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
