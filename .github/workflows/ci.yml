@@ -87,7 +87,7 @@ jobs:
             docker rm stage_finder_backend || true
             docker run -d --name stage_finder_backend \
             -e FS_ENVIRONMENT=${{ env.FS_ENVIRONMENT }} \
-            -e FS_DATABASE_TYPE=${{ env.FS_DATABASE_TYPE }} \
+            -e FS_DATABASE_DIALECT=${{ env.FS_DATABASE_DIALECT }} \
             -e FS_DATABASE_HOST=${{ env.FS_DATABASE_HOST }} \
             -e FS_DATABASE_PORT=${{ env.FS_DATABASE_PORT }} \
             -e FS_DATABASE_USERNAME=${{ env.FS_DATABASE_USERNAME }} \
