@@ -103,4 +103,4 @@ jobs:
             -l "traefik.http.services.stage_finder_backend.loadbalancer.server.port=${{ env.FS_BACKEND_PORT }}"  \
             -l "traefik.http.routers.stage_finder_backend.tls=true"  \
             -l "traefik.http.routers.stage_finder_backend.tls.certresolver=certresolver"  \
-            ghcr.io/${{ github.repository_owner }}/backend:latest
+            ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
