@@ -14,14 +14,14 @@ jobs:
   main:
     runs-on: ubuntu-latest
     env:
-      FS_ENVIRONMENT: ${{ secrets.FS_ENVIRONMENT }}
-      FS_DATABASE_DIALECT: ${{ secrets.FS_DATABASE_DIALECT }}
-      FS_DATABASE_HOST: ${{ secrets.FS_DATABASE_HOST }}
-      FS_DATABASE_PORT: ${{ secrets.FS_DATABASE_PORT }}
-      FS_DATABASE_USERNAME: ${{ secrets.FS_DATABASE_USERNAME }}
-      FS_DATABASE_PASSWORD: ${{ secrets.FS_DATABASE_PASSWORD }}
-      FS_DATABASE_DATABASE: ${{ secrets.FS_DATABASE_DATABASE }}
-      FS_BACKEND_PORT: ${{ secrets.FS_BACKEND_PORT }}
+      SF_ENVIRONMENT: ${{ secrets.SF_ENVIRONMENT }}
+      SF_DATABASE_DIALECT: ${{ secrets.SF_DATABASE_DIALECT }}
+      SF_DATABASE_HOST: ${{ secrets.SF_DATABASE_HOST }}
+      SF_DATABASE_PORT: ${{ secrets.SF_DATABASE_PORT }}
+      SF_DATABASE_USERNAME: ${{ secrets.SF_DATABASE_USERNAME }}
+      SF_DATABASE_PASSWORD: ${{ secrets.SF_DATABASE_PASSWORD }}
+      SF_DATABASE_DATABASE: ${{ secrets.SF_DATABASE_DATABASE }}
+      SF_BACKEND_PORT: ${{ secrets.SF_BACKEND_PORT }}
     permissions:
       contents: read
       packages: write
@@ -86,21 +86,21 @@ jobs:
             docker stop stage_finder_backend || true
             docker rm stage_finder_backend || true
             docker run -d --name stage_finder_backend \
-            -e FS_ENVIRONMENT=${{ env.FS_ENVIRONMENT }} \
-            -e FS_DATABASE_DIALECT=${{ env.FS_DATABASE_DIALECT }} \
-            -e FS_DATABASE_HOST=${{ env.FS_DATABASE_HOST }} \
-            -e FS_DATABASE_PORT=${{ env.FS_DATABASE_PORT }} \
-            -e FS_DATABASE_USERNAME=${{ env.FS_DATABASE_USERNAME }} \
-            -e FS_DATABASE_PASSWORD=${{ env.FS_DATABASE_PASSWORD }} \
-            -e FS_DATABASE_DATABASE=${{ env.FS_DATABASE_DATABASE }} \
-            -e FS_BACKEND_PORT=${{ env.FS_BACKEND_PORT }} \
+            -e SF_ENVIRONMENT=${{ env.SF_ENVIRONMENT }} \
+            -e SF_DATABASE_DIALECT=${{ env.SF_DATABASE_DIALECT }} \
+            -e SF_DATABASE_HOST=${{ env.SF_DATABASE_HOST }} \
+            -e SF_DATABASE_PORT=${{ env.SF_DATABASE_PORT }} \
+            -e SF_DATABASE_USERNAME=${{ env.SF_DATABASE_USERNAME }} \
+            -e SF_DATABASE_PASSWORD=${{ env.SF_DATABASE_PASSWORD }} \
+            -e SF_DATABASE_DATABASE=${{ env.SF_DATABASE_DATABASE }} \
+            -e SF_BACKEND_PORT=${{ env.SF_BACKEND_PORT }} \
             --link stage_finder_postgres_db:postgres \
             -l "traefik.http.routers.stage_finder_backend.rule=Host(\`furahasolutions.tech\`) && PathPrefix(\`/stage_finder_backend\`)" \
             -l "traefik.http.routers.stage_finder_backend.middlewares=stage_finder_backendpathstrip@docker" \
             -l "traefik.http.middlewares.stage_finder_backendpathstrip.stripprefix.prefixes=/stage_finder_backend" \
             -l "traefik.http.middlewares.stage_finder_backend.stripprefix.prefixes=/stage_finder_backend" \
             -l "traefik.http.routers.stage_finder_backend.service=stage_finder_backend"  \
-            -l "traefik.http.services.stage_finder_backend.loadbalancer.server.port=${{ env.FS_BACKEND_PORT }}"  \
+            -l "traefik.http.services.stage_finder_backend.loadbalancer.server.port=${{ env.SF_BACKEND_PORT }}"  \
             -l "traefik.http.routers.stage_finder_backend.tls=true"  \
             -l "traefik.http.routers.stage_finder_backend.tls.certresolver=certresolver"  \
             ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
