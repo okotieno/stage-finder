@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "serve:backend": "nx serve backend",
+    "docker:build": "nx run backend:docker-build",
     "db:seed:all": "nx run-many -t db:seed:all"
   },
   "private": true,
