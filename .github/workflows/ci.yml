@@ -73,3 +73,35 @@ jobs:
           file: ./apps/backend/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
+
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker pull ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
+            docker stop stage_finder_backend || true
+            docker rm stage_finder_backend || true
+            docker run -d --name stage_finder_backend \
+            -e FS_ENVIRONMENT=${{ env.FS_ENVIRONMENT }} \
+            -e FS_DATABASE_TYPE=${{ env.FS_DATABASE_TYPE }} \
+            -e FS_DATABASE_HOST=${{ env.FS_DATABASE_HOST }} \
+            -e FS_DATABASE_PORT=${{ env.FS_DATABASE_PORT }} \
+            -e FS_DATABASE_USERNAME=${{ env.FS_DATABASE_USERNAME }} \
+            -e FS_DATABASE_PASSWORD=${{ env.FS_DATABASE_PASSWORD }} \
+            -e FS_DATABASE_DATABASE=${{ env.FS_DATABASE_DATABASE }} \
+            -e FS_BACKEND_PORT=${{ env.FS_BACKEND_PORT }} \
+            --link stage_finder_postgres_db:postgres \
+            -l "traefik.http.routers.stage_finder_backend.rule=Host(\`furahasolutions.tech\`) && PathPrefix(\`/stage_finder_backend\`)" \
+            -l "traefik.http.routers.stage_finder_backend.middlewares=stage_finder_backendpathstrip@docker" \
+            -l "traefik.http.middlewares.stage_finder_backendpathstrip.stripprefix.prefixes=/stage_finder_backend" \
+            -l "traefik.http.middlewares.stage_finder_backend.stripprefix.prefixes=/stage_finder_backend" \
+            -l "traefik.http.routers.stage_finder_backend.service=stage_finder_backend"  \
+            -l "traefik.http.services.stage_finder_backend.loadbalancer.server.port=${{ env.FS_BACKEND_PORT }}"  \
+            -l "traefik.http.routers.stage_finder_backend.tls=true"  \
+            -l "traefik.http.routers.stage_finder_backend.tls.certresolver=certresolver"  \
+            ghcr.io/${{ github.repository_owner }}/backend:latest
