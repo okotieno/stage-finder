@@ -14,6 +14,8 @@ WORKDIR /app
 RUN addgroup --system backend && \
           adduser --system -G backend backend
 
+RUN ls -lrt
+
 COPY dist/apps/backend backend/
 RUN chown -R backend:backend .
 
