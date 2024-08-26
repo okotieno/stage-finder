@@ -8,7 +8,9 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class RoutesController {
   constructor(private readonly routesService: RoutesService) {}
 
-  @ApiOperation({ summary: 'Retrieve all routes' })
+  @ApiOperation({
+    summary: 'Retrieve all routes',
+  })
   @ApiResponse({ status: 200, description: 'List of routes.', type: [RouteModel] })
   @Get()
   async findAll() {
