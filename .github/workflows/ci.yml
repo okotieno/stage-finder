@@ -74,7 +74,6 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
 
-
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
