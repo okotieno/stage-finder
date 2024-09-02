@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { RouteModel } from '@sf/backend/db';
-import { StopModel } from '@sf/backend/db';
+import { RouteModel, RouteStopModel, StopModel } from '@sf/backend/db';
+import { CreateRouteDto } from '../dto/create-route.dto';
 
 @Injectable()
 export class RoutesService {
@@ -9,12 +9,14 @@ export class RoutesService {
     @InjectModel(RouteModel)
     private readonly routeModel: typeof RouteModel,
     @InjectModel(StopModel)
-    private readonly stopModel: typeof StopModel
+    private readonly stopModel: typeof StopModel,
+    @InjectModel(RouteStopModel)
+    private readonly routeStopModel: typeof RouteStopModel
   ) {
   }
 
   async findAll() {
-    const routes = await this.routeModel.findAll({include: [StopModel]});
+    const routes = await this.routeModel.findAll({ include: [StopModel] });
 
     // Fetch and attach stop details for each route
     const routePromises = routes.map(async route => {
@@ -27,19 +29,19 @@ export class RoutesService {
           id: source?.id,
           name: source?.name,
           lat: source?.lat,
-          lng: source?.lng,
+          lng: source?.lng
         },
         terminus: {
           id: terminus?.id,
           name: terminus?.name,
           lat: terminus?.lat,
-          lng: terminus?.lng,
+          lng: terminus?.lng
         },
         stops: route.destinationsServed.map((item) => ({
           id: item?.id,
           name: item?.name,
           lat: item?.lat,
-          lng: item?.lng,
+          lng: item?.lng
         }))
       };
     });
@@ -53,5 +55,48 @@ export class RoutesService {
       throw new NotFoundException(`Route with id ${id} not found`);
     }
     return route;
+  }
+
+  async create(createRouteDto: CreateRouteDto) {
+    const [source] = await this.stopModel.findOrCreate({
+      where: {
+        name: createRouteDto.source?.name,
+        lat: createRouteDto.source?.lat,
+        lng: createRouteDto.source?.lng
+      }
+    });
+
+    const [terminus] = await this.stopModel.findOrCreate({
+      where: {
+        name: createRouteDto.source?.name,
+        lat: createRouteDto.source?.lat,
+        lng: createRouteDto.source?.lng
+      }
+    });
+
+    const [route] = await this.routeModel.findOrCreate({
+      where: {
+        name: createRouteDto.name,
+        sourceStopId: source.id,
+        terminusStopId: terminus.id
+      }
+    });
+
+    for (let j = 0; j < Number(createRouteDto.destinationsServed?.length); j++) {
+      const destination = createRouteDto.destinationsServed?.[j];
+      const [stop] = await this.stopModel.findOrCreate({
+        where: {
+          name: destination?.name,
+          lat: destination?.lat,
+          lng: destination?.lng
+        }
+      });
+      await this.routeStopModel.findOrCreate({
+        where: {
+          routeId: route?.id,
+          stopId: stop.id
+        }
+      })
+    }
   }
 }

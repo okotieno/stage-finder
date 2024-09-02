@@ -20,5 +20,5 @@ export class StopModel extends Model<StopModel> {
     type: DataType.FLOAT,
     allowNull: true,
   })
-  lng?: string
+  lng?: number
 }
