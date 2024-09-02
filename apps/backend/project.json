@@ -5,6 +5,17 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "build": {
+      "options": {
+        "assets": [
+          {
+            "glob": "**/*.hbs",
+            "input": "apps/backend/src/app/views/",
+            "output": "views"
+          }
+        ]
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",

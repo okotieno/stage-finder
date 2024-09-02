@@ -1,11 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { RouteModel, RouteStopModel, StopModel } from '@sf/backend/db';
+import { RouteModel, RouteStopModel, SaccoModel, StopModel } from '@sf/backend/db';
 import { CreateRouteDto } from '../dto/create-route.dto';
-import { SaccoModel } from '@sf/backend/db';
+import { busRoutes } from './bus-routes';
+
 
 @Injectable()
-export class RoutesService {
+export class RoutesService implements OnApplicationBootstrap {
   constructor(
     @InjectModel(RouteModel)
     private readonly routeModel: typeof RouteModel,
@@ -18,6 +19,17 @@ export class RoutesService {
   ) {
   }
 
+  async onApplicationBootstrap() {
+    const routeExists = await this.routeModel.findOne({
+      where: { id: 1 }
+    });
+    if (!routeExists) {
+      for (let i = 0; i < busRoutes.routes.length; i++) {
+        await this.create(busRoutes.routes[i]);
+      }
+    }
+  }
+
   async findAll() {
     const routes = await this.routeModel.findAll({ include: [StopModel] });
 
@@ -25,6 +37,7 @@ export class RoutesService {
     const routePromises = routes.map(async route => {
       const source = await this.stopModel.findOne({ where: { id: route.sourceStopId } });
       const terminus = await this.stopModel.findOne({ where: { id: route.terminusStopId } });
+      const sacco = await this.saccoModel.findOne({ where: { id: route.saccoId } });
       return {
         id: route.id,
         name: route.name,
@@ -40,12 +53,15 @@ export class RoutesService {
           lat: terminus?.lat,
           lng: terminus?.lng
         },
-        stops: route.destinationsServed.map((item) => ({
+        stops: route.stops.map((item) => ({
           id: item?.id,
           name: item?.name,
           lat: item?.lat,
           lng: item?.lng
-        }))
+        })),
+        sacco: {
+          name: sacco?.name,
+        }
       };
     });
 
@@ -77,7 +93,7 @@ export class RoutesService {
       }
     });
 
-    const [sacco] = await this.routeModel.findOrCreate({
+    const [sacco] = await this.saccoModel.findOrCreate({
       where: {
         name: createRouteDto.sacco?.name
       }
@@ -88,12 +104,12 @@ export class RoutesService {
         name: createRouteDto.name,
         sourceStopId: source.id,
         terminusStopId: terminus.id,
-        saccoId: sacco.id,
+        saccoId: sacco.id
       }
     });
 
-    for (let j = 0; j < Number(createRouteDto.destinationsServed?.length); j++) {
-      const destination = createRouteDto.destinationsServed?.[j];
+    for (let j = 0; j < Number(createRouteDto.stops?.length); j++) {
+      const destination = createRouteDto.stops?.[j];
       const [stop] = await this.stopModel.findOrCreate({
         where: {
           name: destination?.name,

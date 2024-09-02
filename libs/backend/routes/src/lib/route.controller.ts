@@ -40,7 +40,7 @@ export class RoutesController {
             lat: -1.3089602,
             lng: 36.8094744
           },
-          destinationsServed: [
+          stops: [
             {
               name: "CBD Bus Station",
               lat: -1.2882596,

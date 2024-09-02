@@ -36,7 +36,7 @@ export class RouteModel extends Model<RouteModel> {
     foreignKey: 'route_id',
     otherKey: 'stop_id'
   })
-  destinationsServed!: StopModel[];
+  stops!: StopModel[];
 
   @ForeignKey(() => SaccoModel)
   @Column

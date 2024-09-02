@@ -32,7 +32,7 @@ export class CreateRouteDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => LocationDto)
-  destinationsServed?: LocationDto[];
+  stops?: LocationDto[];
 
   @IsNotEmpty()
   @ValidateNested()

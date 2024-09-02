@@ -45,7 +45,7 @@ module.exports = {
           'lat': -1.4412,
           'lng': 36.9571
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'Athiriver',
             'lat': -1.4565,
@@ -73,7 +73,7 @@ module.exports = {
           'lat': -1.2955,
           'lng': 36.7862
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'Kawangware',
             'lat': -1.2907,
@@ -99,7 +99,7 @@ module.exports = {
           'lat': -1.2972,
           'lng': 36.8771
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'Komarocks',
             'lat': -1.2758,
@@ -125,7 +125,7 @@ module.exports = {
           'lat': -1.2972,
           'lng': 36.8771
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'Kayole',
             'lat': -1.2871,
@@ -151,7 +151,7 @@ module.exports = {
           'lat': -1.3284,
           'lng': 36.8309
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -177,7 +177,7 @@ module.exports = {
           'lat': -1.2756,
           'lng': 36.9617
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -203,7 +203,7 @@ module.exports = {
           'lat': -1.3007,
           'lng': 36.8073
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -229,7 +229,7 @@ module.exports = {
           'lat': -1.3126,
           'lng': 36.7911
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -255,7 +255,7 @@ module.exports = {
           'lat': -1.3224,
           'lng': 36.6856
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -286,7 +286,7 @@ module.exports = {
           'lat': -1.2995,
           'lng': 36.7768
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -312,7 +312,7 @@ module.exports = {
           'lat': -1.3611,
           'lng': 36.6544
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -338,7 +338,7 @@ module.exports = {
           'lat': -1.3126,
           'lng': 36.7911
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -364,7 +364,7 @@ module.exports = {
           'lat': -1.2556,
           'lng': 36.6587
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -390,7 +390,7 @@ module.exports = {
           'lat': -1.2414,
           'lng': 36.8976
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -416,7 +416,7 @@ module.exports = {
           'lat': -1.2369,
           'lng': 36.8707
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -442,7 +442,7 @@ module.exports = {
           'lat': -1.2177,
           'lng': 36.8881
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -468,7 +468,7 @@ module.exports = {
           'lat': -1.1458,
           'lng': 36.9622
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -494,7 +494,7 @@ module.exports = {
           'lat': -1.1869,
           'lng': 36.9074
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -520,7 +520,7 @@ module.exports = {
           'lat': -1.2073,
           'lng': 36.8924
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -545,7 +545,7 @@ module.exports = {
           'lat': -1.2232,
           'lng': 36.7096
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -571,7 +571,7 @@ module.exports = {
           'lat': -1.2321,
           'lng': 36.7002
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -597,7 +597,7 @@ module.exports = {
           'lat': -1.1879,
           'lng': 36.7495
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -623,7 +623,7 @@ module.exports = {
           'lat': -1.2232,
           'lng': 36.7096
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -649,7 +649,7 @@ module.exports = {
           'lat': -1.2736,
           'lng': 36.8507
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -680,7 +680,7 @@ module.exports = {
           'lat': -1.2736,
           'lng': 36.8507
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -710,7 +710,7 @@ module.exports = {
           'lat': -1.2871,
           'lng': 36.9039
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -736,7 +736,7 @@ module.exports = {
           'lat': -1.2679,
           'lng': 36.7064
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -762,7 +762,7 @@ module.exports = {
           'lat': -1.3602,
           'lng': 36.7312
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -788,7 +788,7 @@ module.exports = {
           'lat': -1.3042,
           'lng': 36.8731
         },
-        'destinationsServed': [
+        'stops': [
           {
             'name': 'City Centre',
             'lat': -1.286389,
@@ -814,8 +814,8 @@ module.exports = {
         ['terminus_stop_id']: terminusStopId,
         ['source_stop_id']: sourceStopId
       }, 'routes');
-      for (let j = 0; j < route.destinationsServed.length; j++) {
-        const destination = route.destinationsServed[j];
+      for (let j = 0; j < route.stops.length; j++) {
+        const destination = route.stops[j];
         const stopId = await createItem(destination, 'stops');
 
         await queryInterface.bulkInsert('route_stop', [
