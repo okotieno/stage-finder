@@ -1,6 +1,5 @@
 'use strict';
 
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
@@ -57,6 +56,9 @@ module.exports = {
             'lat': -1.4412,
             'lng': 36.9571
           }
+        ],
+        'saccos': [
+          'Embassava, UmoInner'
         ]
       },
       {
@@ -82,7 +84,8 @@ module.exports = {
             'lat': -1.2955,
             'lng': 36.7862
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '19C',
@@ -107,7 +110,8 @@ module.exports = {
             'lat': -1.2972,
             'lng': 36.8771
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '34B',
@@ -132,7 +136,8 @@ module.exports = {
             'lat': -1.2972,
             'lng': 36.8771
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '12C',
@@ -157,7 +162,8 @@ module.exports = {
             'lat': -1.3284,
             'lng': 36.8309
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '33',
@@ -182,7 +188,8 @@ module.exports = {
             'lat': -1.2756,
             'lng': 36.9617
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '7C',
@@ -207,7 +214,8 @@ module.exports = {
             'lat': -1.3007,
             'lng': 36.8073
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '8',
@@ -232,7 +240,8 @@ module.exports = {
             'lat': -1.3126,
             'lng': 36.7911
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '24',
@@ -262,7 +271,8 @@ module.exports = {
             'lat': -1.3395,
             'lng': 36.6684
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '32',
@@ -287,7 +297,8 @@ module.exports = {
             'lat': -1.2995,
             'lng': 36.7768
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '111',
@@ -312,7 +323,8 @@ module.exports = {
             'lat': -1.3611,
             'lng': 36.6544
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '4W',
@@ -337,7 +349,8 @@ module.exports = {
             'lat': -1.3126,
             'lng': 36.7911
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '102',
@@ -362,7 +375,8 @@ module.exports = {
             'lat': -1.2556,
             'lng': 36.6587
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '25A',
@@ -387,7 +401,8 @@ module.exports = {
             'lat': -1.2414,
             'lng': 36.8976
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '43',
@@ -412,7 +427,8 @@ module.exports = {
             'lat': -1.2369,
             'lng': 36.8707
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '44',
@@ -437,7 +453,8 @@ module.exports = {
             'lat': -1.2177,
             'lng': 36.8881
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '145',
@@ -462,7 +479,8 @@ module.exports = {
             'lat': -1.1458,
             'lng': 36.9622
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '45',
@@ -487,7 +505,8 @@ module.exports = {
             'lat': -1.1869,
             'lng': 36.9074
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '49',
@@ -537,7 +556,8 @@ module.exports = {
             'lat': -1.2232,
             'lng': 36.7096
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '103',
@@ -562,7 +582,8 @@ module.exports = {
             'lat': -1.2321,
             'lng': 36.7002
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '11B',
@@ -587,7 +608,8 @@ module.exports = {
             'lat': -1.1879,
             'lng': 36.7495
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '118',
@@ -612,7 +634,8 @@ module.exports = {
             'lat': -1.2232,
             'lng': 36.7096
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '17A',
@@ -642,7 +665,8 @@ module.exports = {
             'lat': -1.2736,
             'lng': 36.8507
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '18C',
@@ -697,7 +721,8 @@ module.exports = {
             'lat': -1.2871,
             'lng': 36.9039
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '15',
@@ -722,7 +747,8 @@ module.exports = {
             'lat': -1.2679,
             'lng': 36.7064
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '12',
@@ -747,7 +773,8 @@ module.exports = {
             'lat': -1.3602,
             'lng': 36.7312
           }
-        ]
+        ],
+        'saccos': []
       },
       {
         'routeName': '33A',
@@ -772,7 +799,8 @@ module.exports = {
             'lat': -1.3042,
             'lng': 36.8731
           }
-        ]
+        ],
+        'saccos': []
       }
     ];
 

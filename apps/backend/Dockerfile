@@ -17,6 +17,8 @@ RUN addgroup --system backend && \
 COPY dist/apps/backend backend/
 RUN chown -R backend:backend .
 
+RUN npm i pg
+
 # You can remove this install step if you build with `--bundle` option.
 # The bundled output will include external dependencies.
 RUN npm --prefix backend --omit=dev -f install

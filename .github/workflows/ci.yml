@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - prod
   pull_request:
 
 permissions:
@@ -13,6 +13,18 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
+    env:
+      SF_ENVIRONMENT: ${{ secrets.SF_ENVIRONMENT }}
+      SF_DATABASE_DIALECT: ${{ secrets.SF_DATABASE_DIALECT }}
+      SF_DATABASE_HOST: ${{ secrets.SF_DATABASE_HOST }}
+      SF_DATABASE_PORT: ${{ secrets.SF_DATABASE_PORT }}
+      SF_DATABASE_USERNAME: ${{ secrets.SF_DATABASE_USERNAME }}
+      SF_DATABASE_PASSWORD: ${{ secrets.SF_DATABASE_PASSWORD }}
+      SF_DATABASE_DATABASE: ${{ secrets.SF_DATABASE_DATABASE }}
+      SF_BACKEND_PORT: ${{ secrets.SF_BACKEND_PORT }}
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,3 +52,56 @@ jobs:
       - run: pnpm nx-cloud record -- pnpm nx affected -t lint
       - run: pnpm nx-cloud record -- pnpm nx affected -t test
       - run: pnpm nx-cloud record -- pnpm nx affected -t build
+
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and push Docker image to GHCR
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/backend/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker pull ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
+            docker stop stage_finder_backend || true
+            docker rm stage_finder_backend || true
+            docker run -d --name stage_finder_backend \
+            -e SF_ENVIRONMENT=${{ env.SF_ENVIRONMENT }} \
+            -e SF_DATABASE_DIALECT=${{ env.SF_DATABASE_DIALECT }} \
+            -e SF_DATABASE_HOST=${{ env.SF_DATABASE_HOST }} \
+            -e SF_DATABASE_PORT=${{ env.SF_DATABASE_PORT }} \
+            -e SF_DATABASE_USERNAME=${{ env.SF_DATABASE_USERNAME }} \
+            -e SF_DATABASE_PASSWORD=${{ env.SF_DATABASE_PASSWORD }} \
+            -e SF_DATABASE_DATABASE=${{ env.SF_DATABASE_DATABASE }} \
+            -e SF_BACKEND_PORT=${{ env.SF_BACKEND_PORT }} \
+            --link stage_finder_postgres_db:postgres \
+            -l "traefik.http.routers.stage_finder_backend.rule=Host(\`api.furahasolutions.tech\`) && PathPrefix(\`/stage_finder_backend\`)" \
+            -l "traefik.http.routers.stage_finder_backend.middlewares=stage_finder_backendpathstrip@docker" \
+            -l "traefik.http.middlewares.stage_finder_backendpathstrip.stripprefix.prefixes=/stage_finder_backend" \
+            -l "traefik.http.middlewares.stage_finder_backend.stripprefix.prefixes=/stage_finder_backend" \
+            -l "traefik.http.routers.stage_finder_backend.service=stage_finder_backend"  \
+            -l "traefik.http.services.stage_finder_backend.loadbalancer.server.port=${{ env.SF_BACKEND_PORT }}"  \
+            -l "traefik.http.routers.stage_finder_backend.tls=true"  \
+            -l "traefik.http.routers.stage_finder_backend.tls.certresolver=certresolver"  \
+            ghcr.io/${{ github.repository_owner }}/stage-finder-backend:latest
+
