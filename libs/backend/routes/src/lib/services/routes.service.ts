@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { RouteModel, RouteStopModel, StopModel } from '@sf/backend/db';
 import { CreateRouteDto } from '../dto/create-route.dto';
+import { SaccoModel } from '@sf/backend/db';
 
 @Injectable()
 export class RoutesService {
@@ -11,7 +12,9 @@ export class RoutesService {
     @InjectModel(StopModel)
     private readonly stopModel: typeof StopModel,
     @InjectModel(RouteStopModel)
-    private readonly routeStopModel: typeof RouteStopModel
+    private readonly routeStopModel: typeof RouteStopModel,
+    @InjectModel(SaccoModel)
+    private readonly saccoModel: typeof SaccoModel
   ) {
   }
 
@@ -74,11 +77,18 @@ export class RoutesService {
       }
     });
 
+    const [sacco] = await this.routeModel.findOrCreate({
+      where: {
+        name: createRouteDto.sacco?.name
+      }
+    });
+
     const [route] = await this.routeModel.findOrCreate({
       where: {
         name: createRouteDto.name,
         sourceStopId: source.id,
-        terminusStopId: terminus.id
+        terminusStopId: terminus.id,
+        saccoId: sacco.id,
       }
     });
 
@@ -96,7 +106,7 @@ export class RoutesService {
           routeId: route?.id,
           stopId: stop.id
         }
-      })
+      });
     }
   }
 }

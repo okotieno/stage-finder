@@ -1,5 +1,6 @@
 import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { StopModel } from './stop.model';
+import { SaccoModel } from './sacco.model';
 
 @Table({ tableName: 'routes', underscored: true })
 export class RouteModel extends Model<RouteModel> {
@@ -36,5 +37,11 @@ export class RouteModel extends Model<RouteModel> {
     otherKey: 'stop_id'
   })
   destinationsServed!: StopModel[];
+
+  @ForeignKey(() => SaccoModel)
+  @Column
+  saccoId?: number;
+
+  sacco?: SaccoModel
 
 }
