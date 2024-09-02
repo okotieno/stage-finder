@@ -3,7 +3,6 @@ import { RoutesService } from './services/routes.service';
 import { RouteModel } from '@sf/backend/db';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateRouteDto } from './dto/create-route.dto';
-import { CreatedAt } from 'sequelize-typescript';
 
 @Controller('routes')
 @ApiTags('routes')
@@ -30,7 +29,7 @@ export class RoutesController {
         summary: 'A simple example',
         description: 'This is an example of a user creation request',
         value: {
-          name: "14B",
+          name: "14A",
           source: {
             name: "CBD Bus Station",
             lat: -1.2882596,
@@ -41,7 +40,7 @@ export class RoutesController {
             lat: -1.3089602,
             lng: 36.8094744
           },
-          destinationsServed: [
+          stops: [
             {
               name: "CBD Bus Station",
               lat: -1.2882596,
@@ -58,9 +57,9 @@ export class RoutesController {
               lng: 36.8094744
             }
           ],
-          saccos: [
-            "WestSacco, WestCompeSacco"
-          ]
+          sacco: {
+            name: "West Sacco"
+          }
         },
       },
     }})

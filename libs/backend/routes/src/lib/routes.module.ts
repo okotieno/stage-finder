@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RoutesController } from './route.controller';
 import { RoutesService } from './services/routes.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { RouteModel, StopModel } from '@sf/backend/db';
+import { RouteModel, SaccoModel, StopModel } from '@sf/backend/db';
 import { RouteStopModel } from '@sf/backend/db';
 
 @Module({
@@ -10,7 +10,8 @@ import { RouteStopModel } from '@sf/backend/db';
     SequelizeModule.forFeature([
       RouteModel,
       StopModel,
-      RouteStopModel
+      RouteStopModel,
+      SaccoModel
     ])
   ],
   controllers: [

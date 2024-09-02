@@ -7,9 +7,10 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
-
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.enableCors();
@@ -31,6 +32,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   const port = process.env['SF_BACKEND_PORT'] ?? 3000;
   await app.listen(port);
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '', 'views'));
+  app.setViewEngine('hbs');
+
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
 }
 

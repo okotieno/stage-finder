@@ -1,5 +1,10 @@
-import { IsString, IsNumber, IsArray, ValidateNested } from 'class-validator';
+import { IsString, IsNumber, IsArray, ValidateNested, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
+
+class SaccoDto {
+  @IsString()
+  name?: string;
+}
 
 class LocationDto {
   @IsString()
@@ -27,9 +32,9 @@ export class CreateRouteDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => LocationDto)
-  destinationsServed?: LocationDto[];
+  stops?: LocationDto[];
 
-  @IsArray()
-  @IsString({ each: true })
-  saccos?: string[];
+  @IsNotEmpty()
+  @ValidateNested()
+  sacco?: SaccoDto;
 }
