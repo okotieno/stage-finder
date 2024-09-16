@@ -19,7 +19,7 @@ RUN ls -lrt
 COPY dist/apps/backend backend/
 RUN chown -R backend:backend .
 
-RUN npm i pg
+RUN npm i pg hbs
 
 # You can remove this install step if you build with `--bundle` option.
 # The bundled output will include external dependencies.
